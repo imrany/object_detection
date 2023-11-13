@@ -1,5 +1,5 @@
 // Import dependencies
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
@@ -42,14 +42,16 @@ function App() {
 
       // Make Detections
       const obj = await net.detect(video);
-
+      // console.log(obj)
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       drawRect(obj, ctx); 
     }
   };
 
-  useEffect(()=>{runCoco()},[]);
+  useEffect(()=>{
+    runCoco()
+  },[]);
 
   return (
     <div className="App">
