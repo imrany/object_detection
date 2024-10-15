@@ -1,7 +1,7 @@
 
-export const drawRect = (detections, ctx) =>{
+export const drawRect = (detections:any, ctx:any) =>{
   // Loop through each prediction
-  detections.forEach(prediction => {
+  detections.forEach((prediction:any) => {
 
     // Extract boxes and classes
     const [x, y, width, height] = prediction['bbox']; 

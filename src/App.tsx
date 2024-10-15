@@ -1,5 +1,5 @@
 // Import dependencies
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import * as tf from "@tensorflow/tfjs";
 //import * as cpu from "@tensorflow/tfjs-backend-cpu";
@@ -10,8 +10,8 @@ import { drawRect } from "./utilities";
 
 function App() {
   const [isLoading, setIsLoading]=useState(true)
-  const webcamRef = useRef(null);
-  const canvasRef = useRef(null);
+  const webcamRef:any = useRef(null);
+  const canvasRef:any = useRef(null);
 
   tf.setBackend("webgl");
   // Main function
@@ -25,7 +25,7 @@ function App() {
     }, 10);
   };
 
-  const detect = async (net) => {
+  const detect = async (net:any) => {
     // Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -33,7 +33,7 @@ function App() {
       webcamRef.current.video.readyState === 4
     ) {
       // Get Video Properties
-      const video = webcamRef.current.video;
+        const video:any = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
 
@@ -62,7 +62,7 @@ function App() {
       <>
           {isLoading&&isLoading?(
               <div style={{display:"flex",justifyContent:"center", background:"#252525", alignItems:"center", height:"100vh"}}>
-              <p style={{text:"14px", color:"white"}}>Loading, please wait...</p>
+              <p style={{fontSize:14, color:"white"}}>Loading, please wait...</p>
               </div>
           ):(
                 <div className="App">
@@ -77,7 +77,7 @@ function App() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                zindex: 9,
+                                zIndex: 9,
                                 width: "100vw",
                                 height: "100vh",
                             }}
@@ -92,7 +92,7 @@ function App() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                zindex: 8,
+                                zIndex: 8,
                                 width: "100vw",
                                 height: "100vh",
                             }}
