@@ -54,6 +54,12 @@ export default function MainPage() {
       drawRect(obj, ctx); 
     }
   };
+
+  function capture(){
+    const imageSrc:any = webcamRef.current.getScreenshot();
+    localStorage.setItem("capture",imageSrc)
+    console.log(imageSrc)
+  }
  
   useEffect(()=>{
     runCoco()
