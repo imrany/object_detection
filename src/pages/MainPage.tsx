@@ -7,6 +7,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import { drawRect } from "../components/utilities";
 import { GlobalContext } from "../context";
+import { IoSearch } from "react-icons/io5";
 
 export default function MainPage() {
   const { videoConstraints }=useContext(GlobalContext);
@@ -105,6 +106,16 @@ export default function MainPage() {
                             height={videoConstraints.height}
                             width={videoConstraints.width}
                         />
+                        <div className="fixed bottom-0 left-0 right-0 z-12 h-[180px]">
+                            <div className="h-fit w-full flex gap-5 flex-col items-center justify-center">
+                                <div className="rounded-md bg-black p-2">
+                                    <p className="text-[15px]">Tap shutter button to search</p>
+                                </div>
+                                <button className="bg-white rounded-[100px] hover:bg-gray-500 w-[50px] h-[50px] flex items-center justify-center">
+                                    <IoSearch className="w-[22px] text-black h-[22px]"/>
+                                </button>
+                            </div>
+                        </div>
                     </header>
                 </div>
             )}
