@@ -1,5 +1,5 @@
 // Import dependencies
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import * as tf from "@tensorflow/tfjs";
 //import * as cpu from "@tensorflow/tfjs-backend-cpu";
@@ -9,6 +9,7 @@ import "./App.css";
 import { drawRect } from "./utilities";
 
 function App() {
+  const [isLoading, setIsLoading]=useState(true)
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -17,6 +18,7 @@ function App() {
   const runCoco = async () => {
     const net = await cocossd.load();
     console.log("cocossd model loaded.");
+    setIsLoading(false)
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
@@ -57,41 +59,49 @@ function App() {
   },[]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Webcam
-          ref={webcamRef}
-          muted={true} 
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
+      <>
+          {isLoading&&isLoading?(
+              <div style={{display:"flex",justifyContent:"center", background:"#252525", alignItems:"center", height:"100vh"}}>
+              <p style={{text:"14px", color:"white"}}>Loading, please wait...</p>
+              </div>
+          ):(
+                <div className="App">
+                    <header className="App-header">
+                        <Webcam
+                            ref={webcamRef}
+                            muted={true} 
+                            style={{
+                                position: "absolute",
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                                left: 0,
+                                right: 0,
+                                textAlign: "center",
+                                zindex: 9,
+                                width: "100vw",
+                                height: "100vh",
+                            }}
+                        />
 
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-          }}
-        />
-      </header>
-    </div>
-  );
+                        <canvas
+                            ref={canvasRef}
+                            style={{
+                                position: "absolute",
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                                left: 0,
+                                right: 0,
+                                textAlign: "center",
+                                zindex: 8,
+                                width: "100vw",
+                                height: "100vh",
+                            }}
+                        />
+                    </header>
+                </div>
+            )}
+        </>
+    );
 }
 
 export default App;
