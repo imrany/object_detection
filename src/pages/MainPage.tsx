@@ -1,5 +1,6 @@
 // Import dependencies
 import { useRef, useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import * as tf from "@tensorflow/tfjs";
 //import * as cpu from "@tensorflow/tfjs-backend-cpu";
@@ -10,8 +11,10 @@ import { GlobalContext } from "../context";
 import { IoSearch } from "react-icons/io5";
 
 export default function MainPage() {
+  const navigate=useNavigate();
   const { videoConstraints }=useContext(GlobalContext);
   const [isLoading, setIsLoading]=useState(true)
+  const [object,setObject]=useState<any>([]);
   const webcamRef:any = useRef(null);
   const canvasRef:any = useRef(null);
 
@@ -53,13 +56,21 @@ export default function MainPage() {
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       drawRect(obj, ctx); 
+      setObject(obj)
     }
   };
 
   function capture(){
-    const imageSrc:any = webcamRef.current.getScreenshot();
-    localStorage.setItem("capture",imageSrc)
-    console.log(imageSrc)
+    try{
+        const imageSrc:any = webcamRef.current.getScreenshot();
+        if(object.length>0){
+            localStorage.setItem("capture",imageSrc)
+            localStorage.setItem("query",object[object.length-1]['class'])
+            navigate("/search")
+        }
+    }catch(error:any){
+        console.log(error.message)
+    }
   }
  
   useEffect(()=>{
@@ -73,7 +84,7 @@ export default function MainPage() {
                     <p style={{fontSize:14, color:"white", textAlign:"center"}}>Loading, please wait...</p>
                 </div>
             ):(
-                <div className="App">
+                <div className="App h-screen">
                     <header className="App-header">
                         <Webcam
                             ref={webcamRef}
@@ -85,8 +96,11 @@ export default function MainPage() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                zIndex: 9
+                                zIndex: 9,
+                                height:videoConstraints.height,
+                                width:videoConstraints.width
                             }}
+                            screenshotFormat="image/png"
                             height={videoConstraints.height}
                             width={videoConstraints.width}
                             videoConstraints={videoConstraints}
@@ -101,18 +115,18 @@ export default function MainPage() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                zIndex: 10
+                                zIndex: 10,
+                                height:videoConstraints.height,
+                                width:videoConstraints.width
                             }}
-                            height={videoConstraints.height}
-                            width={videoConstraints.width}
                         />
-                        <div className="fixed bottom-0 left-0 right-0 z-12 h-[180px]">
+                        <div className="fixed bottom-0 left-0 right-0 z-20 h-[180px]">
                             <div className="h-fit w-full flex gap-5 flex-col items-center justify-center">
                                 <div className="rounded-md bg-black p-2">
                                     <p className="text-[15px]">Tap shutter button to search</p>
                                 </div>
-                                <button className="bg-white rounded-[100px] hover:bg-gray-500 w-[50px] h-[50px] flex items-center justify-center">
-                                    <IoSearch className="w-[22px] text-black h-[22px]"/>
+                                <button onClick={capture} className="bg-white rounded-[100px] hover:bg-blue-500 w-[50px] h-[50px] flex items-center justify-center">
+                                    <IoSearch className="w-[22px] hover:text-white text-black h-[22px]"/>
                                 </button>
                             </div>
                         </div>
