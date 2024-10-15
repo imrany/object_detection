@@ -11,7 +11,7 @@ import { GlobalContext } from "../context";
 export default function MainPage() {
   const { videoConstraints }=useContext(GlobalContext);
   const [isLoading, setIsLoading]=useState(true)
-  const webcamRef:anyy = useRef(null);
+  const webcamRef:any = useRef(null);
   const canvasRef:any = useRef(null);
 
   tf.setBackend("webgl");
