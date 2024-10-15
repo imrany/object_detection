@@ -8,17 +8,17 @@ import { GlobalContext } from "./context";
 export default function App(){
     const API_URL=`http://127.0.0.1:5000`
     const [videoConstraints, setVideoConstraints]=useState<any>({
-        /*width: 1280,*/
+        width: screen.width-400,
         height: 720,
         facingMode: "user"
     })
 
     window.onresize=function(){
-        screen.width>1080?"":setVideoConstraints({height:720, facingMode:"environment"})
+        screen.width>1080?"":setVideoConstraints({height:screen.height, width:screen.width, facingMode:"environment"})
     }
 
     useEffect(()=>{
-        screen.width>1080?"":setVideoConstraints({height:720, facingMode:"environment"})
+        screen.width>1080?"":setVideoConstraints({height:screen.height, width:screen.width, facingMode:"environment"})
     },[screen.width])
     return(
         <BrowserRouter>

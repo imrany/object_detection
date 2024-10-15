@@ -34,7 +34,7 @@ export default function MainPage() {
       webcamRef.current.video.readyState === 4
     ) {
       // Get Video Properties
-        const video:any = webcamRef.current.video;
+      const video:any = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
 
@@ -60,12 +60,12 @@ export default function MainPage() {
   },[]);
 
   return (
-      <>
-          {isLoading&&isLoading?(
-              <div style={{display:"flex",justifyContent:"center", background:"#252525", alignItems:"center", height:"100vh"}}>
-                <p style={{fontSize:14, color:"white"}}>Loading, please wait...</p>
-              </div>
-          ):(
+        <>
+            {isLoading&&isLoading?(
+                <div style={{display:"flex",justifyContent:"center", background:"#252525", alignItems:"center", height:"100vh"}}>
+                    <p style={{fontSize:14, color:"white", textAlign:"center"}}>Loading, please wait...</p>
+                </div>
+            ):(
                 <div className="App">
                     <header className="App-header">
                         <Webcam
@@ -78,11 +78,10 @@ export default function MainPage() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                zIndex: 9,
-                                width: "100vw",
-                                height: "100vh",
+                                zIndex: 9
                             }}
-                            height={720}
+                            height={videoConstraints.height}
+                            width={videoConstraints.width}
                             videoConstraints={videoConstraints}
                         />
 
@@ -95,10 +94,10 @@ export default function MainPage() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                zIndex: 10,
-                                width: "100vw",
-                                height: "100vh",
+                                zIndex: 10
                             }}
+                            height={videoConstraints.height}
+                            width={videoConstraints.width}
                         />
                     </header>
                 </div>

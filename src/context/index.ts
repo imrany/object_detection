@@ -3,7 +3,7 @@ import { createContext } from 'react'
 type ContextType={
     videoConstraints:{
         height?:number,
-        weigth?:number,
+        width?:number,
         facingMode:string
     },
     API_URL:string
@@ -11,8 +11,8 @@ type ContextType={
 
 export const GlobalContext=createContext<ContextType>({
     videoConstraints:{
-        /*width: 1280,*/
-        height: 720,
+        width: screen.width-400,
+        height: screen.height,
         facingMode: "user"
     },
     API_URL:""
