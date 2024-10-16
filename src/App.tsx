@@ -9,6 +9,7 @@ import { GlobalContext } from "./context";
 export default function App(){
     const API_URL=`https://gemmie.onrender.com`
     const [isSupported,setIsSupported]=useState(true)
+    const [isFacingModeUser,setIsFacingModeUser]=useState(false)
     const [videoConstraints, setVideoConstraints]=useState<any>({
         width: screen.width-400,
         height: 720,
@@ -20,7 +21,13 @@ export default function App(){
     }
      
     function changeVideoConstraints(){
-        setVideoConstraints({height:720, width:screen.width, facingMode:"user"})
+        if(isFacingModeUser===false){
+            setIsFacingModeUser(true)
+            setVideoConstraints({height:720, width:screen.width, facingMode:"user"})
+        }else{
+            setIsFacingModeUser(false)
+            setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
+        }
     }
 
     useEffect(()=>{

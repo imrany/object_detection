@@ -78,6 +78,7 @@ export default function MainPage() {
   }
  
   useEffect(()=>{
+    window.speechSynthesis.cancel()
     runCoco()
   },[]);
 
@@ -96,9 +97,9 @@ export default function MainPage() {
                                     <FaChevronLeft className="w-[22px] h-[20px]"/>
                                 </Link>
                                 <p>Search</p>*/}
-                                <div className="ml-auto flex flex-col gap-3">
+                                <div className="ml-auto flex flex-col gap-4">
                                     <button onClick={changeVideoConstraints}>
-                                        <IoCameraReverseSharp className="w-[25px] h-[25px]"/>
+                                        <IoCameraReverseSharp className="w-[28px] h-[28px]"/>
                                     </button>
                                     {isMuted?(
                                         <button onClick={()=>{
@@ -106,7 +107,7 @@ export default function MainPage() {
                                             localStorage.setItem("audio","unmute")
                                             window.speechSynthesis.cancel()
                                         }}>
-                                            <HiMiniSpeakerWave className="w-[25px] h-[25px]"/>
+                                            <HiMiniSpeakerWave className="w-[28px] h-[28px]"/>
                                         </button>
                                     ):(
                                         <button onClick={()=>{
@@ -114,7 +115,7 @@ export default function MainPage() {
                                             localStorage.setItem("audio","mute")
                                             window.speechSynthesis.cancel()
                                         }}>
-                                            <HiMiniSpeakerXMark className="w-[25px] h-[25px]"/>
+                                            <HiMiniSpeakerXMark className="w-[28px] h-[28px]"/>
                                         </button>
                                     )}
                                 </div>
