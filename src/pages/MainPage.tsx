@@ -10,11 +10,13 @@ import { drawRect } from "../components/utilities";
 import { GlobalContext } from "../context";
 import { IoSearch } from "react-icons/io5";
 import { IoCameraReverseSharp } from "react-icons/io5";
+import { HiMiniSpeakerXMark, HiMiniSpeakerWave } from "react-icons/hi2";
 
 export default function MainPage() {
   const navigate=useNavigate();
   const { videoConstraints, changeVideoConstraints }=useContext(GlobalContext);
   const [isLoading, setIsLoading]=useState(true)
+  const [isMuted,setIsMuted]=useState(true)
   const [object,setObject]=useState<any>([]);
   const webcamRef:any = useRef(null);
   const canvasRef:any = useRef(null);
@@ -94,9 +96,28 @@ export default function MainPage() {
                                     <FaChevronLeft className="w-[22px] h-[20px]"/>
                                 </Link>
                                 <p>Search</p>*/}
-                                <button onClick={changeVideoConstraints} className="ml-auto">
-                                    <IoCameraReverseSharp className="w-[30px] h-[30px]"/>
-                                </button>
+                                <div className="ml-auto flex flex-col gap-3">
+                                    <button onClick={changeVideoConstraints}>
+                                        <IoCameraReverseSharp className="w-[30px] h-[30px]"/>
+                                    </button>
+                                    {isMuted?(
+                                        <button onClick={()=>{
+                                            setIsMuted(false)
+                                            localStorage.setItem("audio","unmute")
+                                            window.speechSynthesis.cancel()
+                                        }}>
+                                            <HiMiniSpeakerWave className="w-[25px] h-[25px]"/>
+                                        </button>
+                                    ):(
+                                        <button onClick={()=>{
+                                            setIsMuted(true)
+                                            localStorage.setItem("audio","mute")
+                                            window.speechSynthesis.cancel()
+                                        }}>
+                                            <HiMiniSpeakerXMark className="w-[25px] h-[25px]"/>
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
 

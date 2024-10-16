@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react"
 import { FaChevronLeft } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -7,6 +7,7 @@ import { FaAngellist } from "react-icons/fa6";
 import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
 
 export default function SearchPage(){
+    const navigate=useNavigate()
     const { videoConstraints, API_URL }=useContext(GlobalContext);
     const [isMuted,setIsMuted]=useState(true)
     const [results,setResults]=useState<any>(<></>)
@@ -42,7 +43,14 @@ export default function SearchPage(){
         }
     }
 
+    function checkQueryAndCapture(){
+        if(!localStorage.getItem("capture")||!localStorage.getItem("query")){
+            navigate("/")
+        }
+    }
+
     useEffect(()=>{
+        checkQueryAndCapture()
         window.speechSynthesis.cancel()
         getResults()
     },[])
