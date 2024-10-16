@@ -4,10 +4,11 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { GlobalContext } from "../context";
 import { FaAngellist } from "react-icons/fa6";
-import { HiMiniSpeakerWave } from "react-icons/hi2";
+import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
 
 export default function SearchPage(){
     const { videoConstraints, API_URL }=useContext(GlobalContext);
+    const [isMuted,setIsMuted]=useState(true)
     const [results,setResults]=useState<any>(<></>)
     const [error,setError]=useState("")
     const [isLoading,setIsLoading]=useState(true)
@@ -42,6 +43,7 @@ export default function SearchPage(){
     }
 
     useEffect(()=>{
+        window.speechSynthesis.cancel()
         getResults()
     },[])
     return(
@@ -70,7 +72,25 @@ export default function SearchPage(){
                                 <FaAngellist className="w-[22px] h-[22px]"/>
                                 <p className="capitalize">{query}</p>
                             </div>
-                            <HiMiniSpeakerWave className="w-[22px] h-[22px] ml-auto"/>
+                            {isMuted?(
+                                <HiMiniSpeakerWave onClick={()=>{
+                                    setIsMuted(false)
+                                    
+                                    // Create a new instance of SpeechSynthesisUtterance
+                                    var speech = new SpeechSynthesisUtterance(results);
+                                    // Set the voice, rate, pitch, and language if desired
+                                    speech.lang = 'en-US'; // You can change the language
+                                    speech.rate = 1; // Speed (default is 1, range: 0.1 to 10)
+                                    speech.pitch = 1; // Pitch (default is 1, range: 0 to 2)
+                                    // Speak the text
+                                    window.speechSynthesis.speak(speech);
+                                }} className="w-[22px] h-[22px] ml-auto"/>
+                            ):(
+                                <HiMiniSpeakerXMark onClick={()=>{
+                                    setIsMuted(true)
+                                    window.speechSynthesis.cancel()
+                                }} className="w-[22px] h-[22px] ml-auto"/>
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-col m-[20px] text-sm">

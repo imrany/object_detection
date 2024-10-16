@@ -6,6 +6,7 @@ type ContextType={
         width?:number,
         facingMode:string
     },
+    changeVideoConstraints:any,
     API_URL:string
 }
 
@@ -15,5 +16,6 @@ export const GlobalContext=createContext<ContextType>({
         height: screen.height,
         facingMode: "user"
     },
+    changeVideoConstraints:()=>{},
     API_URL:""
 })

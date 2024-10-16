@@ -9,10 +9,11 @@ import * as cocossd from "@tensorflow-models/coco-ssd";
 import { drawRect } from "../components/utilities";
 import { GlobalContext } from "../context";
 import { IoSearch } from "react-icons/io5";
+import { IoCameraReverseSharp } from "react-icons/io5";
 
 export default function MainPage() {
   const navigate=useNavigate();
-  const { videoConstraints }=useContext(GlobalContext);
+  const { videoConstraints, changeVideoConstraints }=useContext(GlobalContext);
   const [isLoading, setIsLoading]=useState(true)
   const [object,setObject]=useState<any>([]);
   const webcamRef:any = useRef(null);
@@ -87,6 +88,18 @@ export default function MainPage() {
             ):(
                 <div className="text-center h-screen">
                     <header className="h-screen flex flex-col items-center justify-center text-white bg-[#14161a]">
+                        <div className="fixed h-[0px] z-10 top-0 left-0 right-0">
+                            <div className="flex bg-none text-white items-center justify-between m-[20px]">
+                                {/*<Link to="/">
+                                    <FaChevronLeft className="w-[22px] h-[20px]"/>
+                                </Link>
+                                <p>Search</p>*/}
+                                <button onClick={changeVideoConstraints} className="ml-auto">
+                                    <IoCameraReverseSharp className="w-[30px] h-[30px]"/>
+                                </button>
+                            </div>
+                        </div>
+
                         <Webcam
                             ref={webcamRef}
                             audio={false} 

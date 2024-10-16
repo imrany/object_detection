@@ -22,9 +22,9 @@ export const drawRect = (detections:any, ctx:any) =>{
 
                 // Set styling
                 const color = Math.floor(Math.random()*16777215).toString(16);
-                ctx.lineWidth = 20;
+                ctx.lineWidth = 2;
                 ctx.strokeStyle = '#' + color
-                ctx.font = '18px Arial';
+                ctx.font = '20px Arial';
 
                 // Draw rectangles and text
                 ctx.beginPath();   
