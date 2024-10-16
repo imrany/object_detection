@@ -20,7 +20,7 @@ export default function App(){
     }
      
     function changeVideoConstraints(){
-        setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
+        setVideoConstraints({height:720, width:screen.width, facingMode:"user"})
     }
 
     useEffect(()=>{
