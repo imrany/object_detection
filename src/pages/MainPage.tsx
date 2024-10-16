@@ -55,6 +55,7 @@ export default function MainPage() {
       // console.log(obj)
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
+      //ctx.lineWidth = 3
       drawRect(obj, ctx); 
       setObject(obj)
     }
@@ -97,8 +98,7 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 9,
-                                height:videoConstraints.height,
-                                width:videoConstraints.width
+                                width:"100vw"
                             }}
                             screenshotFormat="image/png"
                             height={videoConstraints.height}
@@ -116,9 +116,9 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 10,
-                                height:videoConstraints.height,
-                                width:videoConstraints.width
+                                width:"100vw"
                             }}
+                            width={videoConstraints.width}
                         />
                         <div className="fixed bottom-0 left-0 right-0 z-20 h-[180px]">
                             <div className="h-fit w-full flex gap-5 flex-col items-center justify-center">

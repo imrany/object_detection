@@ -16,11 +16,11 @@ export default function App(){
     })
 
     window.onresize=function(){
-        screen.width>1080?setIsSupported(false):setVideoConstraints({height:screen.height, width:screen.width, facingMode:"environment"})
+        screen.width>1080?setIsSupported(false):setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
     }
 
     useEffect(()=>{
-        screen.width>1080?setIsSupported(false):setVideoConstraints({height:screen.height, width:screen.width, facingMode:"environment"})
+        screen.width>1080?setIsSupported(false):setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
     },[screen.width])
     return(
         <>
