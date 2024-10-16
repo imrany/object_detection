@@ -98,7 +98,7 @@ export default function MainPage() {
                                 <p>Search</p>*/}
                                 <div className="ml-auto flex flex-col gap-3">
                                     <button onClick={changeVideoConstraints}>
-                                        <IoCameraReverseSharp className="w-[30px] h-[30px]"/>
+                                        <IoCameraReverseSharp className="w-[25px] h-[25px]"/>
                                     </button>
                                     {isMuted?(
                                         <button onClick={()=>{
