@@ -7,7 +7,7 @@ import SearchPage from "./pages/SearchPage.tsx";
 import { GlobalContext } from "./context";
 
 export default function App(){
-    const API_URL=`http://127.0.0.1:5000`
+    const API_URL=`https://gemmie.onrender.com`
     const [isSupported,setIsSupported]=useState(true)
     const [videoConstraints, setVideoConstraints]=useState<any>({
         width: screen.width-400,

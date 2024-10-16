@@ -81,12 +81,12 @@ export default function MainPage() {
   return (
         <>
             {isLoading&&isLoading?(
-                <div style={{display:"flex",justifyContent:"center", background:"#252525", alignItems:"center", height:"100vh"}}>
+                <div style={{display:"flex",justifyContent:"center", background:"#14161a", alignItems:"center", height:"100vh"}}>
                     <p style={{fontSize:14, color:"white", textAlign:"center"}}>Loading, please wait...</p>
                 </div>
             ):(
-                <div className="App h-screen">
-                    <header className="App-header">
+                <div className="text-center h-screen">
+                    <header className="h-screen flex flex-col items-center justify-center text-white bg-[#14161a]">
                         <Webcam
                             ref={webcamRef}
                             audio={false} 
