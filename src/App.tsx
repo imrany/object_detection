@@ -18,6 +18,10 @@ export default function App(){
     window.onresize=function(){
         screen.width>1080?setIsSupported(false):setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
     }
+     
+    function changeVideoConstraints(){
+        setVideoConstraints({height:720, width:screen.width, facingMode:"user"})
+    }
 
     useEffect(()=>{
         screen.width>1080?setIsSupported(false):setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
@@ -26,7 +30,7 @@ export default function App(){
         <>
             {isSupported?(
                 <BrowserRouter>
-                    <GlobalContext.Provider value={{ videoConstraints, API_URL }}>
+                    <GlobalContext.Provider value={{ videoConstraints, changeVideoConstraints, API_URL }}>
                         <Routes>
                             <Route path="/" element={<MainPage/>}/>
                             <Route path="/search" element={<SearchPage/>}/>
