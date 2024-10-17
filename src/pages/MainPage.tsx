@@ -17,6 +17,7 @@ export default function MainPage() {
   const { videoConstraints, changeVideoConstraints }=useContext(GlobalContext);
   const [isLoading, setIsLoading]=useState(true)
   const [isMuted,setIsMuted]=useState(true)
+  const [error,setError]=useState("Loading, please wait...")
   const [object,setObject]=useState<any>([]);
   const webcamRef:any = useRef(null);
   const canvasRef:any = useRef(null);
@@ -24,13 +25,18 @@ export default function MainPage() {
   tf.setBackend("webgl");
   // Main function
   const runCoco = async () => {
-    const net = await cocossd.load();
-    console.log("cocossd model loaded.");
-    setIsLoading(false)
-    //  Loop and detect hands
-    setInterval(() => {
-      detect(net);
-    }, 10);
+    try{
+        const net = await cocossd.load();
+        console.log("cocossd model loaded.");
+        setIsLoading(false)
+        //  Loop and detect hands
+        setInterval(() => {
+            detect(net);
+        }, 10);
+    }catch(error:any){
+        setIsLoading(false)
+        setError(error.message)
+    }
   };
 
   const detect = async (net:any) => {
@@ -86,7 +92,7 @@ export default function MainPage() {
         <>
             {isLoading&&isLoading?(
                 <div style={{display:"flex",justifyContent:"center", background:"#14161a", alignItems:"center", height:"100vh"}}>
-                    <p style={{fontSize:14, color:"white", textAlign:"center"}}>Loading, please wait...</p>
+                    <p style={{fontSize:14, color:"white", textAlign:"center"}}>{error}</p>
                 </div>
             ):(
                 <div className="text-center h-screen">
@@ -133,11 +139,11 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 9,
-                                width:"100vw"
+                                width:"100vw",
+                                height:"100vh",
+                                objectFit:"cover"
                             }}
                             screenshotFormat="image/png"
-                            height={videoConstraints.height}
-                            width={videoConstraints.width}
                             videoConstraints={videoConstraints}
                         />
 
@@ -151,9 +157,9 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 10,
-                                width:"100vw"
+                                width:"95vw",
+                                height:"95vh"
                             }}
-                            width={videoConstraints.width}
                         />
                         <div className="fixed bottom-0 left-0 right-0 z-20 h-[180px]">
                             <div className="h-fit w-full flex gap-5 flex-col items-center justify-center">
