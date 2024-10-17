@@ -140,9 +140,9 @@ export default function MainPage() {
                                 textAlign: "center",
                                 zIndex: 9,
                                 width:"100vw",
-                                height:"100vh",
-                                objectFit:"cover"
                             }}
+                            height={videoConstraints.height}
+                            width={videoConstraints.width}
                             screenshotFormat="image/png"
                             videoConstraints={videoConstraints}
                         />
@@ -156,9 +156,9 @@ export default function MainPage() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
+                                margin:"10px 0",
                                 zIndex: 10,
                                 width:"95vw",
-                                height:"95vh"
                             }}
                         />
                         <div className="fixed bottom-0 left-0 right-0 z-20 h-[180px]">
