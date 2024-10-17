@@ -158,7 +158,6 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 10,
-                                margin:"1vh 0",
                                 height:"50vh",
                                 width:"98vw",
                             }}
