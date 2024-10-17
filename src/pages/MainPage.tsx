@@ -139,9 +139,10 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 9,
+                                height:"60vh",
                                 width:"100vw",
+                                objectFit:"cover"
                             }}
-                            height={videoConstraints.height}
                             width={videoConstraints.width}
                             screenshotFormat="image/png"
                             videoConstraints={videoConstraints}
@@ -156,8 +157,8 @@ export default function MainPage() {
                                 left: 0,
                                 right: 0,
                                 textAlign: "center",
-                                margin:"10px 0",
                                 zIndex: 10,
+                                height:"62vh",
                                 width:"95vw",
                             }}
                         />
