@@ -139,7 +139,7 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 9,
-                                height:"60vh",
+                                height:"50vh",
                                 width:"100vw",
                                 objectFit:"cover"
                             }}
@@ -158,8 +158,8 @@ export default function MainPage() {
                                 right: 0,
                                 textAlign: "center",
                                 zIndex: 10,
-                                height:"62vh",
-                                width:"95vw",
+                                height:"48vh",
+                                width:"98vw",
                             }}
                         />
                         <div className="fixed bottom-0 left-0 right-0 z-20 h-[180px]">
