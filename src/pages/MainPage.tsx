@@ -5,7 +5,6 @@ import Webcam from "react-webcam";
 import * as tf from "@tensorflow/tfjs";
 //import * as cpu from "@tensorflow/tfjs-backend-cpu";
 //import * as webgl from "@tensorflow/tfjs-backend-webgl";
-import * as cocossd from "@tensorflow-models/coco-ssd";
 import { drawRect } from "../components/utilities";
 import { GlobalContext } from "../context";
 import { IoSearch } from "react-icons/io5";
@@ -14,31 +13,15 @@ import { HiMiniSpeakerXMark, HiMiniSpeakerWave } from "react-icons/hi2";
 
 export default function MainPage() {
   const navigate=useNavigate();
-  const { videoConstraints, changeVideoConstraints }=useContext(GlobalContext);
-  const [isLoading, setIsLoading]=useState(true)
+  const { videoConstraints, isLoading, voiceInput,voiceCommands, net, changeVideoConstraints }=useContext(GlobalContext);
   const [isMuted,setIsMuted]=useState(true)
   const [error,setError]=useState("Loading, please wait...")
   const [object,setObject]=useState<any>([]);
   const webcamRef:any = useRef(null);
   const canvasRef:any = useRef(null);
-
+ 
   tf.setBackend("webgl");
-  // Main function
-  const runCoco = async () => {
-    try{
-        const net = await cocossd.load();
-        console.log("cocossd model loaded.");
-        setIsLoading(false)
-        //  Loop and detect hands
-        setInterval(() => {
-            detect(net);
-        }, 10);
-    }catch(error:any){
-        setIsLoading(false)
-        setError(error.message)
-    }
-  };
-
+  
   const detect = async (net:any) => {
     // Check data is available
     if (
@@ -84,9 +67,15 @@ export default function MainPage() {
   }
  
   useEffect(()=>{
-    window.speechSynthesis.cancel()
-    runCoco()
-  },[]);
+    if(voiceInput.length>0){
+        console.log(voiceInput)
+    }else{
+        window.speechSynthesis.cancel()
+        setInterval(() => {
+            detect(net);
+        }, 10);
+    }
+  },[isLoading, voiceInput]);
 
   return (
         <>

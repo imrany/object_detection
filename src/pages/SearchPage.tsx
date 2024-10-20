@@ -45,7 +45,7 @@ export default function SearchPage(){
 
     function checkQueryAndCapture(){
         if(!localStorage.getItem("capture")||!localStorage.getItem("query")){
-            navigate("/")
+            navigate("/main")
         }
     }
 
@@ -64,7 +64,7 @@ export default function SearchPage(){
                 <div className="flex flex-col text-white bg-[#14161a] min-h-screen">
                     <div className="fixed h-[0px] z-10 top-0 left-0 right-0">
                         <div className="flex bg-none text-white items-center justify-between m-[20px]">
-                            <Link to="/">
+                            <Link to="/main">
                                 <FaChevronLeft className="w-[22px] h-[20px]"/>
                             </Link>
                             <p>Search</p>
