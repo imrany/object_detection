@@ -11,7 +11,8 @@ type ContextType={
     net:any,
     isLoading:boolean,
     voiceInput:string,
-    voiceCommands:string[]
+    voiceCommands:string[],
+    recognition:any
 }
 
 export const GlobalContext=createContext<ContextType>({
@@ -21,6 +22,7 @@ export const GlobalContext=createContext<ContextType>({
         facingMode: "user"
     },
     changeVideoConstraints:()=>{},
+    recognition:{},
     API_URL:"",
     isLoading:true,
     net:null,

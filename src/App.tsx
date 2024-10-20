@@ -49,44 +49,57 @@ export default function App(){
         }
     }
 
-    async function speechToText(){
-        try{
-            var speech = true; 
-            window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; 
-  
-            const recognition = new SpeechRecognition(); 
-            recognition.interimResults = true; 
-  
-            recognition.addEventListener('result', e => { 
-                const transcript = Array.from(e.results) 
-                    .map(result => result[0]) 
-                    .map(result => result.transcript) 
-                    .join('') 
-  
-                setVoiceInput(transcript); 
-            }); 
-          
-            if (speech == true) { 
-                recognition.start(); 
-                recognition.addEventListener('end', recognition.start); 
-            } 
-        }catch(error:any){
-            console.log(error.message)
+    let recognition = window.SpeechRecognition ? window.SpeechRecognition : window.webkitSpeechRecognition; 
+    if(recognition){
+        recognition = new recognition();   
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = () => {
+            console.log("Ready to listen")
         }
+
+        recognition.addEventListener('result', e => { 
+            /*const transcript = Array.from(e.results) 
+                .map(result => result[0]) 
+                .map(result => result.transcript) 
+                .join('') 
+             */    
+            const result=e.results
+            const transcript=result[result.length-1][result[0].length-1].transcript
+            setVoiceInput(transcript); 
+        }); 
+          
+        //if (speech) { 
+            //recognition.start(); 
+          //  setInterval(()=>{
+            //    recognition.addEventListener('end', recognition.start)
+            //},10); 
+        //} 
+
+        recognition.onend = ()=> {
+            console.log("Speech recognition ended")
+        }
+
+        recognition.onerror =(e:any)=>{
+            console.error(e.error)
+        }
+    }else {
+        console.error('Speech recognition not supported');
     }
 
     useEffect(()=>{
         runCoco()
-        speechToText()
         screen.width>1080?setIsSupported(false):setVideoConstraints({height:720, width:screen.width, facingMode:"environment"})
     },[screen.width])
     return(
         <>
             {isSupported?(
                 <BrowserRouter>
-                    <GlobalContext.Provider value={{ videoConstraints, changeVideoConstraints, API_URL, voiceCommands, isLoading, net, voiceInput }}>
+                    <GlobalContext.Provider value={{ videoConstraints, changeVideoConstraints, API_URL, recognition, voiceCommands, isLoading, net, voiceInput }}>
                         <Routes>
-                            <Route path="/" element={<MainPage/>}/>
+                            <Route path="/" element={<LandingPage/>}/>
                             <Route path="/main" element={<MainPage/>}/>
                             <Route path="/search" element={<SearchPage/>}/>
                         </Routes>
