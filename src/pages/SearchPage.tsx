@@ -5,10 +5,12 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { GlobalContext } from "../context";
 import { FaAngellist } from "react-icons/fa6";
 import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
+import Microphone from "../components/ui/Microphone.tsx";
+import { textToSpeech } from "../components/utilities.ts";
 
 export default function SearchPage(){
     const navigate=useNavigate()
-    const { videoConstraints, API_URL }=useContext(GlobalContext);
+    const { videoConstraints, API_URL, voiceInput, voiceCommands }=useContext(GlobalContext);
     const [isMuted,setIsMuted]=useState(true)
     const [results,setResults]=useState<any>(<></>)
     const [error,setError]=useState("")
@@ -49,9 +51,46 @@ export default function SearchPage(){
         }
     }
 
-    useEffect(()=>{
-        checkQueryAndCapture()
+    useEffect(()=>{ 
+        if(voiceInput.length>0){
+        console.log(voiceInput)
+        if(voiceCommands.includes(voiceInput)){
+            if(voiceInput==voiceCommands[0]){
+                localStorage.setItem("audio","unmute")
+                setIsMuted(false)
+                textToSpeech(results)
+                console.log("unmuted")
+            }else if(voiceInput==voiceCommands[7]){
+                localStorage.setItem("audio","unmute")
+                setIsMuted(false)
+                textToSpeech(results)
+                console.log("unmuted")
+            }else if(voiceInput==voiceCommands[3]){
+                localStorage.setItem("audio","unmute")
+                setIsMuted(false)
+                console.log("unmuted")
+            }else if(voiceInput==voiceCommands[2]){
+                window.location.reload()
+            }else if(voiceInput==voiceCommands[4]){
+                localStorage.setItem("audio","mute")
+                setIsMuted(true)
+                console.log("muted")
+            }else if(voiceInput==voiceCommands[6]){
+                navigate(-1)
+            }else{
+                textToSpeech("You cannot use that prompt on this page.")
+            }
+        }else{
+            textToSpeech("Please use")
+            voiceCommands.map((command:string)=>{
+                textToSpeech(command)
+            })
+            textToSpeech("to interact")
+        }
+    }else{
         window.speechSynthesis.cancel()
+    }
+        checkQueryAndCapture()
         getResults()
     },[])
     return(
@@ -62,6 +101,7 @@ export default function SearchPage(){
                 </div>
             ):(
                 <div className="flex flex-col text-white bg-[#14161a] min-h-screen">
+                    <Microphone/>
                     <div className="fixed h-[0px] z-10 top-0 left-0 right-0">
                         <div className="flex bg-none text-white items-center justify-between m-[20px]">
                             <Link to="/main">

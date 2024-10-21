@@ -20,13 +20,13 @@ export default function LandingPage(){
     const middleSectionContent=[
         "The Impact of Vision Loss",
         "Vision loss is a serious case and needs more attension, so we've created a expert system that would try to assistance anyone with vision loss to identify common object around them by using their phone camera.",
-        "With the ability to receive voice input and output using artificical intelligence."
+        "With the ability to receive voice input and output using artificial intelligence."
     ]
 
     const footerSectionContent=[
         "Services",
         "If you would like to start, say start",
-        "If you would like to contact, say contact us"
+        "If you would like to contact us, say contact us"
     ]
 
     function readSection(contents:string[]){
@@ -52,7 +52,11 @@ export default function LandingPage(){
                     localStorage.setItem("audio","mute")
                     console.log("muted")
                 }else if(voiceInput==voiceCommands[5]){
-                    navigate("/main")
+                    if(isLoading){
+                        textToSpeech("Please wait and try again later")
+                    }else{
+                        navigate("/main")
+                    }
                 }else{
                     textToSpeech("You cannot use that prompt on this page.")
                 }
@@ -64,7 +68,7 @@ export default function LandingPage(){
                 textToSpeech("to interact")
             }
         }else{
-            //window.speechSynthesis.cancel()
+            window.speechSynthesis.cancel()
         }
     },[voiceInput]);
     return (

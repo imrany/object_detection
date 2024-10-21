@@ -95,10 +95,12 @@ export default function MainPage() {
             })
             textToSpeech("to interact")
         }
+    }else{
+        window.speechSynthesis.cancel()
+        setInterval(() => {
+            detect(net);
+        }, 10);
     }
-    setInterval(() => {
-        detect(net);
-    }, 10);
   },[isLoading, voiceInput]);
 
   return (
@@ -125,7 +127,6 @@ export default function MainPage() {
                                         <button onClick={()=>{
                                             setIsMuted(false)
                                             localStorage.setItem("audio","unmute")
-                                            window.speechSynthesis.cancel()
                                         }}>
                                             <HiMiniSpeakerWave className="w-[28px] h-[28px]"/>
                                         </button>
