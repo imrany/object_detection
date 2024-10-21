@@ -97,10 +97,11 @@ export default function MainPage() {
         }
     }else{
         window.speechSynthesis.cancel()
-        setInterval(() => {
-            detect(net);
-        }, 10);
-    }
+   }
+
+    setInterval(() => {
+        detect(net);
+    }, 10);
   },[isLoading, voiceInput]);
 
   return (

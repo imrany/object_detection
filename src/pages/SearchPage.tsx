@@ -89,10 +89,10 @@ export default function SearchPage(){
         }
     }else{
         window.speechSynthesis.cancel()
-    }
         checkQueryAndCapture()
         getResults()
-    },[])
+    } 
+    },[voiceInput])
     return(
         <>
             {isLoading&&isLoading?(

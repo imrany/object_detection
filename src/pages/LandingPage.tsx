@@ -134,7 +134,7 @@ export default function LandingPage(){
                     <p className="text-sm">{middleSectionContent[2]}</p>
                 </div>
             </div>
-            <footer onDoubleClick={()=>readSection(footerSectionContent)} className="px-4 py-6 bg-blue-500 text-white flex ">
+            <footer onDoubleClick={()=>readSection(footerSectionContent)} className="px-4 h-[200px] py-6 bg-blue-800 text-white flex ">
                 <div className="flex flex-col gap-2">
                     <p className="text-lg font-semibold">{footerSectionContent[0]}</p>
                     <div className="text-sm flex flex-col gap-1">
