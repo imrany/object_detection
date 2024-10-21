@@ -8,7 +8,7 @@ import Microphone from "../components/ui/Microphone.tsx";
 
 export default function LandingPage(){
     const navigate=useNavigate();
-    const { isLoading, voiceInput,voiceCommands, recognition }=useContext(GlobalContext);
+    const { isLoading, voiceInput,voiceCommands }=useContext(GlobalContext);
 
     const heroSectionContent=[
         "Experts on Special needs and Vision Loss",
@@ -29,22 +29,32 @@ export default function LandingPage(){
         "If you would like to contact, say contact us"
     ]
 
+    function readSection(contents:string[]){
+        localStorage.setItem("audio","unmute")
+        contents.map((content:string)=>{
+            textToSpeech(content)
+        })
+    }
+
     useEffect(()=>{
         if(voiceInput.length>0){
             console.log(voiceInput)
             if(voiceCommands.includes(voiceInput)){
-                if(voiceInput==voiceCommands[0]||voiceInput==voiceCommands[3]){
+                if(voiceInput==voiceCommands[0]||voiceInput==voiceCommands[7]){
+                    readSection(heroSectionContent)
+                    readSection(middleSectionContent)
+                }else if(voiceInput==voiceCommands[3]){
                     localStorage.setItem("audio","unmute")
-                    window.speechSynthesis.start()
-                    console.log("here unmuted")
-                    textToSpeech("unmuted")
+                    console.log("unmuted")
                 }else if(voiceInput==voiceCommands[2]){
                     window.location.reload()
                 }else if(voiceInput==voiceCommands[4]){
-                    textToSpeech("muting")
                     localStorage.setItem("audio","mute")
+                    console.log("muted")
                 }else if(voiceInput==voiceCommands[5]){
                     navigate("/main")
+                }else{
+                    textToSpeech("You cannot use that prompt on this page.")
                 }
             }else{
                 textToSpeech("Please use")
@@ -95,12 +105,7 @@ export default function LandingPage(){
                     </div>
                 </div>
             </div>
-            <div onDoubleClick={()=>{
-                localStorage.setItem("audio","unmute")
-                heroSectionContent.map((content:string)=>{
-                    textToSpeech(content)
-                })
-            }} className="flex relative flex-col gap-6 items-center justify-center text-gray-100 h-[65vh] bg-[url('/images/support-the-africa-child.png')] bg-cover bg-no-repeat bg-center">
+            <div onDoubleClick={()=>readSection(heroSectionContent)} className="flex relative flex-col gap-6 items-center justify-center text-gray-100 h-[65vh] bg-[url('/images/support-the-africa-child.png')] bg-cover bg-no-repeat bg-center">
                 <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                 <div className="relative text-2xl w-[80vw] font-bold text-center">
                     <p>{heroSectionContent[0]}</p>
@@ -118,24 +123,14 @@ export default function LandingPage(){
                     }
                 }}  className="relative shadow-md h-[40px] w-[150px] rounded-[50px] bg-white hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white flex items-center justify-center text-blue-500">Get Started</button>
             </div>
-            <div onDoubleClick={()=>{
-                localStorage.setItem("audio","unmute")
-                middleSectionContent.map((content:string)=>{
-                    textToSpeech(content)
-                })
-            }}  className="mx-3 my-10">
+            <div onDoubleClick={()=>readSection(middleSectionContent)}  className="mx-3 my-10">
                 <div className="flex flex-col gap-1">
                     <p className="text-base font-semibold text-gray-800">{middleSectionContent[0]}</p>
                     <p className="text-sm">{middleSectionContent[1]}</p>
                     <p className="text-sm">{middleSectionContent[2]}</p>
                 </div>
             </div>
-            <footer onDoubleClick={()=>{
-                localStorage.setItem("audio","unmute")
-                footerSectionContent.map((content:string)=>{
-                    textToSpeech(content)
-                })
-            }} className="px-4 py-6 bg-blue-500 text-white flex ">
+            <footer onDoubleClick={()=>readSection(footerSectionContent)} className="px-4 py-6 bg-blue-500 text-white flex ">
                 <div className="flex flex-col gap-2">
                     <p className="text-lg font-semibold">{footerSectionContent[0]}</p>
                     <div className="text-sm flex flex-col gap-1">

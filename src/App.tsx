@@ -7,7 +7,6 @@ import SearchPage from "./pages/SearchPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import { GlobalContext } from "./context";
-import { textToSpeech } from "./components/utilities.ts"
 
 export default function App(){
     const API_URL=`https://gemmie.onrender.com`
@@ -21,7 +20,7 @@ export default function App(){
         height: 720,
         facingMode: "user"
     })
-    const voiceCommands=["SPEAK","SEARCH","RELOAD","UNMUTE","MUTE","START", "BACK"]
+    const voiceCommands=["SPEAK","SEARCH","RELOAD","UNMUTE","MUTE","START", "BACK", "READ"]
 
     // Main function
     const runCoco = async () => {
@@ -49,7 +48,8 @@ export default function App(){
         }
     }
 
-    let recognition:any = window.SpeechRecognition ? window.SpeechRecognition : window.webkitSpeechRecognition; 
+    let recognition = 
+        window.SpeechRecognition || window.webkitSpeechRecognition; 
     if(recognition){
         recognition = new recognition();   
         recognition.continuous = true;
@@ -67,8 +67,10 @@ export default function App(){
                 .join('') 
              */    
             const result=e.results
-            const transcript=result[result.length-1][result[0].length-1].transcript
-            setVoiceInput(transcript.toUpperCase()); 
+            const transcript=result[result.length-1][result[0].length-1].transcript.toUpperCase()
+            const update=transcript.includes('.')?transcript.replace('.',''):transcript;
+            setVoiceInput(update); 
+            recognition.stop()
         }); 
           
         //if (speech) { 

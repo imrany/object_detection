@@ -5,11 +5,12 @@ import Webcam from "react-webcam";
 import * as tf from "@tensorflow/tfjs";
 //import * as cpu from "@tensorflow/tfjs-backend-cpu";
 //import * as webgl from "@tensorflow/tfjs-backend-webgl";
-import { drawRect } from "../components/utilities";
+import { drawRect, textToSpeech } from "../components/utilities";
 import { GlobalContext } from "../context";
 import { IoSearch } from "react-icons/io5";
 import { IoCameraReverseSharp } from "react-icons/io5";
 import { HiMiniSpeakerXMark, HiMiniSpeakerWave } from "react-icons/hi2";
+import Microphone from "../components/ui/Microphone.tsx";
 
 export default function MainPage() {
   const navigate=useNavigate();
@@ -68,12 +69,36 @@ export default function MainPage() {
   useEffect(()=>{
     if(voiceInput.length>0){
         console.log(voiceInput)
-    }else{
-        window.speechSynthesis.cancel()
-        setInterval(() => {
-            detect(net);
-        }, 10);
+        if(voiceCommands.includes(voiceInput)){
+            if(voiceInput==voiceCommands[0]){
+                localStorage.setItem("audio","unmute")
+                console.log("unmuted")
+            }else if(voiceInput==voiceCommands[3]){
+                localStorage.setItem("audio","unmute")
+                console.log("unmuted")
+            }else if(voiceInput==voiceCommands[1]){
+                capture()
+            }else if(voiceInput==voiceCommands[2]){
+                window.location.reload()
+            }else if(voiceInput==voiceCommands[4]){
+                localStorage.setItem("audio","mute")
+                console.log("muted")
+            }else if(voiceInput==voiceCommands[6]){
+                navigate(-1)
+            }else{
+                textToSpeech("You cannot use that prompt on this page.")
+            }
+        }else{
+            textToSpeech("Please use")
+            voiceCommands.map((command:string)=>{
+                textToSpeech(command)
+            })
+            textToSpeech("to interact")
+        }
     }
+    setInterval(() => {
+        detect(net);
+    }, 10);
   },[isLoading, voiceInput]);
 
   return (
@@ -84,6 +109,7 @@ export default function MainPage() {
                 </div>
             ):(
                 <div className="text-center h-screen">
+                    <Microphone/>
                     <header className="h-screen flex flex-col items-center justify-center text-white bg-[#14161a]">
                         <div className="fixed h-[0px] z-10 top-0 left-0 right-0">
                             <div className="flex bg-none text-white items-center justify-between m-[20px]">
