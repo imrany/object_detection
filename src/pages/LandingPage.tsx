@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { GlobalContext } from "../context";
 import { FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { textToSpeech } from "../components/utilities.ts";
+import Microphone from "../components/ui/Microphone.tsx";
 
 export default function LandingPage(){
     const navigate=useNavigate();
@@ -32,11 +33,15 @@ export default function LandingPage(){
         if(voiceInput.length>0){
             console.log(voiceInput)
             if(voiceCommands.includes(voiceInput)){
-                if(voiceInput==voiceCommands[0]){
+                if(voiceInput==voiceCommands[0]||voiceInput==voiceCommands[3]){
                     localStorage.setItem("audio","unmute")
+                    window.speechSynthesis.start()
+                    console.log("here unmuted")
+                    textToSpeech("unmuted")
                 }else if(voiceInput==voiceCommands[2]){
                     window.location.reload()
                 }else if(voiceInput==voiceCommands[4]){
+                    textToSpeech("muting")
                     localStorage.setItem("audio","mute")
                 }else if(voiceInput==voiceCommands[5]){
                     navigate("/main")
@@ -49,16 +54,11 @@ export default function LandingPage(){
                 textToSpeech("to interact")
             }
         }else{
-            //recognition.start()
             //window.speechSynthesis.cancel()
         }
     },[voiceInput]);
     return (
-        <div className="flex flex-col min-h-screen" 
-            onClick={()=>{
-                recognition.start()
-            }}
-        >
+        <div className="flex flex-col min-h-screen">
             <div>
                 <div className="flex mx-3 my-4">
                     <Link to="/" className="font-semibold text-xl text-blue-400">Special needs experts</Link>
@@ -145,6 +145,7 @@ export default function LandingPage(){
                     </div>
                 </div>
             </footer>
+            <Microphone/>
         </div>
     )
 }

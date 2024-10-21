@@ -7,6 +7,7 @@ import SearchPage from "./pages/SearchPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import { GlobalContext } from "./context";
+import { textToSpeech } from "./components/utilities.ts"
 
 export default function App(){
     const API_URL=`https://gemmie.onrender.com`
