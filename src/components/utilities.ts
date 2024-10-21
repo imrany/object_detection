@@ -31,7 +31,7 @@ export const drawRect = (detections:any, ctx:any) =>{
 
 export function textToSpeech(text:string){
     let audioState:any=localStorage.getItem("audio")
-    if(audioState==="unmute"){
+    if(audioState==="unmute"||!audioState){
         // Create a new instance of SpeechSynthesisUtterance
         var speech = new SpeechSynthesisUtterance(text);
 
