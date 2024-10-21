@@ -15,7 +15,6 @@ export default function MainPage() {
   const navigate=useNavigate();
   const { videoConstraints, isLoading, voiceInput,voiceCommands, net, changeVideoConstraints }=useContext(GlobalContext);
   const [isMuted,setIsMuted]=useState(true)
-  const [error,setError]=useState("Loading, please wait...")
   const [object,setObject]=useState<any>([]);
   const webcamRef:any = useRef(null);
   const canvasRef:any = useRef(null);
@@ -81,7 +80,7 @@ export default function MainPage() {
         <>
             {isLoading&&isLoading?(
                 <div style={{display:"flex",justifyContent:"center", background:"#14161a", alignItems:"center", height:"100vh"}}>
-                    <p style={{fontSize:14, color:"white", textAlign:"center"}}>{error}</p>
+                    <p style={{fontSize:14, color:"white", textAlign:"center"}}>Loading, please wait...</p>
                 </div>
             ):(
                 <div className="text-center h-screen">

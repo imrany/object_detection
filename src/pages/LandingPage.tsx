@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { GlobalContext } from "../context";
 import { FiMenu } from "react-icons/fi";
@@ -31,6 +31,23 @@ export default function LandingPage(){
     useEffect(()=>{
         if(voiceInput.length>0){
             console.log(voiceInput)
+            if(voiceCommands.includes(voiceInput)){
+                if(voiceInput==voiceCommands[0]){
+                    localStorage.setItem("audio","unmute")
+                }else if(voiceInput==voiceCommands[2]){
+                    window.location.reload()
+                }else if(voiceInput==voiceCommands[4]){
+                    localStorage.setItem("audio","mute")
+                }else if(voiceInput==voiceCommands[5]){
+                    navigate("/main")
+                }
+            }else{
+                textToSpeech("Please use")
+                voiceCommands.map((command:string)=>{
+                    textToSpeech(command)
+                })
+                textToSpeech("to interact")
+            }
         }else{
             //recognition.start()
             //window.speechSynthesis.cancel()
@@ -38,31 +55,38 @@ export default function LandingPage(){
     },[voiceInput]);
     return (
         <div className="flex flex-col min-h-screen" 
-            //onClick={()=>{
-              //  recognition.start()
-            //}}
+            onClick={()=>{
+                recognition.start()
+            }}
         >
             <div>
                 <div className="flex mx-3 my-4">
                     <Link to="/" className="font-semibold text-xl text-blue-400">Special needs experts</Link>
                     <button onClick={()=>{
-                        const menu=document.querySelector('#menu')
+                        const menu:any=document.querySelector('#menu')
                         menu.classList.toggle('none')
                     }} className="ml-auto">
                         <FiMenu className="w-[24px] h-[24px]"/>
                     </button>
                 </div>
-                <div id="menu" className="fixed none top-0 botton-0 left-0 rigth-0 z-10 border-b-[1px] border-gray-400 bg-white h-[22vh] w-screen">
+                <div id="menu" className="fixed none top-0 botton-0 left-0 rigth-0 z-10 border-b-[1px] border-gray-400 bg-white h-[25vh] w-screen">
                     <div className="flex gap-1 flex-col">
                         <button onClick={()=>{
-                            const menu=document.querySelector('#menu')
+                            const menu:any=document.querySelector('#menu')
                             menu.classList.toggle('none')
                         }}  className="ml-auto m-3 flex-grow border-b-[2px] border-blue-500">
                             <IoClose className="w-[30px] h-[30px]"/>
                         </button>
-                        <ul className="flex flex-col gap-3">
+                        <ul className="flex flex-col gap-2">
                             <li>
-                                <Link to="/main" className="p-4 capitalize active:text-blue-500">Get Started</Link>
+                                <button onClick={()=>{
+                                    if(isLoading){
+                                        localStorage.setItem("audio","unmute")
+                                        textToSpeech("Please wait and try again later")
+                                    }else{
+                                        navigate("/main")
+                                    }
+                                }} className="p-4 capitalize active:text-blue-500">Get Started</button>
                             </li>
                             <li>
                                 <a href="#contact_us" className="p-4 capitalize active:text-blue-500">Contact us</a>
@@ -85,7 +109,14 @@ export default function LandingPage(){
                     <p>{heroSectionContent[1]}</p>
                     <p>{heroSectionContent[2]}</p>
                 </div>
-                <Link to="/main" className="relative shadow-md h-[40px] w-[150px] rounded-[50px] bg-white flex items-center justify-center text-blue-500">Get Started</Link>
+                <button onClick={()=>{
+                    if(isLoading){
+                        localStorage.setItem("audio","unmute")
+                        textToSpeech("Please wait and try again later")
+                    }else{
+                        navigate("/main")
+                    }
+                }}  className="relative shadow-md h-[40px] w-[150px] rounded-[50px] bg-white hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white flex items-center justify-center text-blue-500">Get Started</button>
             </div>
             <div onDoubleClick={()=>{
                 localStorage.setItem("audio","unmute")

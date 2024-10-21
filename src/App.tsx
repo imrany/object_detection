@@ -20,7 +20,7 @@ export default function App(){
         height: 720,
         facingMode: "user"
     })
-    const voiceCommands=["speak","search","reload","unmute","mute","start"]
+    const voiceCommands=["SPEAK","SEARCH","RELOAD","UNMUTE","MUTE","START", "BACK"]
 
     // Main function
     const runCoco = async () => {
@@ -31,7 +31,6 @@ export default function App(){
             setNet($net)
         }catch(error:any){
             setIsLoading(false)
-            setError(error.message)
         }
     };
 
@@ -49,7 +48,7 @@ export default function App(){
         }
     }
 
-    let recognition = window.SpeechRecognition ? window.SpeechRecognition : window.webkitSpeechRecognition; 
+    let recognition:any = window.SpeechRecognition ? window.SpeechRecognition : window.webkitSpeechRecognition; 
     if(recognition){
         recognition = new recognition();   
         recognition.continuous = true;
@@ -60,7 +59,7 @@ export default function App(){
             console.log("Ready to listen")
         }
 
-        recognition.addEventListener('result', e => { 
+        recognition.addEventListener('result', (e:any) => { 
             /*const transcript = Array.from(e.results) 
                 .map(result => result[0]) 
                 .map(result => result.transcript) 
@@ -68,7 +67,7 @@ export default function App(){
              */    
             const result=e.results
             const transcript=result[result.length-1][result[0].length-1].transcript
-            setVoiceInput(transcript); 
+            setVoiceInput(transcript.toUpperCase()); 
         }); 
           
         //if (speech) { 
